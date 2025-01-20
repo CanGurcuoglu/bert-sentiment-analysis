@@ -11,7 +11,7 @@ BASE_URL = "https://www.sikayetvar.com"
 def get_complaints(brand_name):
     complaints = []
     
-    for page in range(1, 3):  # Loop through the first 2 pages
+    for page in range(1, 3):  # Loop through the first 250 pages
         # Construct the URL for each page
         if page == 1:
             URL = f"https://www.sikayetvar.com/{brand_name}"
@@ -52,9 +52,11 @@ def get_complaints(brand_name):
     
     return complaints
 
+
 # Example usage
 complaints = get_complaints('vodafone')
 for url, text in complaints:
     print(f"Full Complaint Text: {text}\n")
+
 
 print(f"Total complaints: {len(complaints)}")
