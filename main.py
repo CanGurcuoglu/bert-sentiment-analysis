@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import requests
 import warnings
 import time
+import csv   
+
 
 warnings.filterwarnings("ignore")
 
@@ -9,8 +11,9 @@ warnings.filterwarnings("ignore")
 BASE_URL = "https://www.sikayetvar.com"
 
 def get_complaints(brand_name):
-    complaints = []
-    
+
+    f = open(r'name.csv', 'a', newline='',encoding='utf-8')
+        
     for page in range(1, 3):  # Loop through the first 250 pages
         # Construct the URL for each page
         if page == 1:
@@ -45,18 +48,10 @@ def get_complaints(brand_name):
                     if complaint_detail:
                         full_complaint_text = complaint_detail.text.strip()
                         # Append the full text with its url to the list
-                        complaints.append((full_url, full_complaint_text))
+                        fields=[full_complaint_text,'0']
+                        csv.writer(f).writerow(fields)
         
         # Sleep for 2 seconds to avoid getting banned from the server
         time.sleep(2)
     
-    return complaints
 
-
-# Example usage
-complaints = get_complaints('vodafone')
-for url, text in complaints:
-    print(f"Full Complaint Text: {text}\n")
-
-
-print(f"Total complaints: {len(complaints)}")
