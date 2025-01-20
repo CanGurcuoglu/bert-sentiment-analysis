@@ -12,7 +12,7 @@ BASE_URL = "https://www.sikayetvar.com"
 
 def get_complaints(brand_name):
 
-    f = open(r'name.csv', 'a', newline='',encoding='utf-8')
+    f = open(r'data.csv', 'a', newline='',encoding='utf-8')
         
     for page in range(1, 3):  # Loop through the first 250 pages
         # Construct the URL for each page
