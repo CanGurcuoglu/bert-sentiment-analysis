@@ -54,4 +54,4 @@ def get_complaints(brand_name):
         # Sleep for 2 seconds to avoid getting banned from the server
         time.sleep(2)
     
-
+get_complaints('vodafone')
