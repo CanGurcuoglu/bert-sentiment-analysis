@@ -4,37 +4,46 @@ import requests
 # Base URL
 BASE_URL = "https://www.sikayetvar.com"
 
-# URL and headers to avoid getting 403 error
-URL = "https://www.sikayetvar.com/turkcell"
-headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-}
+def get_complaints(brand_name):
+    # URL and headers to avoid getting 403 error
+    URL = f"https://www.sikayetvar.com/{brand_name}"
+    
+    # Send the HTTP request
+    httpReq = requests.get(URL, headers={'User-agent': 'your bot 0.1'}, verify=False)
+    
+    # get HTML content
+    html = httpReq.text
+    soup = BeautifulSoup(html, "html.parser")
+    
+    complaints = []
+    complaint_titles = soup.find_all("h2", class_="complaint-title", limit=30)
+    
+    for complaint in complaint_titles:
+        if complaint:
+            # Get the url from the <a> tag
+            link_tag = complaint.find("a", class_="complaint-layer")
+            if link_tag and "href" in link_tag.attrs:
+                relative_url = link_tag["href"]
+                full_url = BASE_URL + relative_url  # Concatenate with the base URL
+                
+                # Send a request to the full page
+                full_complaint_req = requests.get(full_url, headers={'User-agent': 'your bot 0.1'}, verify=False)
+                full_complaint_html = full_complaint_req.text
+                full_complaint_soup = BeautifulSoup(full_complaint_html, "html.parser")
+                
+                # Get the full text
+                complaint_detail = full_complaint_soup.find("div", class_="complaint-detail-description")
+                if complaint_detail:
+                    full_complaint_text = complaint_detail.text.strip()
+                    # Append the full text with its url to the list
+                    complaints.append((full_url, full_complaint_text))
+    
+    return complaints
 
-# Send the HTTP request
-httpReq = requests.get(URL, headers=headers)
+# Example usage
+complaints = get_complaints('vodafone')
+for url, text in complaints:
+    print(f"\nFull Complaint URL: {url}\n")
+    print(f"Full Complaint Text: {text}\n")
 
-# get HTML content
-html = httpReq.text
-soup = BeautifulSoup(html, "html.parser")
-
-# Get the first complaint title with its url 
-complaint = soup.find("h2", class_="complaint-title")
-
-if complaint:
-    # Get the url from the <a> tag
-    link_tag = complaint.find("a", class_="complaint-layer")
-    if link_tag and "href" in link_tag.attrs:
-        relative_url = link_tag["href"]
-        full_url = BASE_URL + relative_url  # Concatenate with the base URL ( "https://www.sikayetvar.com" + relative_url )
-
-        # Send a request to the full page
-        full_complaint_req = requests.get(full_url, headers=headers)
-        full_complaint_html = full_complaint_req.text
-        full_complaint_soup = BeautifulSoup(full_complaint_html, "html.parser")
-
-        # Get the full text
-        full_complaint_text = full_complaint_soup.find("div", class_="complaint-detail-description").text.strip()
-
-        # Print the full text with its url
-        print(f"\nFull Complaint URL: {full_url}\n")
-        print(f"Full Complaint Text: {full_complaint_text}\n")
+print(len(complaints))
