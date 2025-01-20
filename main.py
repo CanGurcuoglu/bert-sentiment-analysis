@@ -1,9 +1,9 @@
 from bs4 import BeautifulSoup
 import requests
 import warnings
+import time
 
 warnings.filterwarnings("ignore")
-
 
 # Base URL
 BASE_URL = "https://www.sikayetvar.com"
@@ -11,14 +11,12 @@ BASE_URL = "https://www.sikayetvar.com"
 def get_complaints(brand_name):
     complaints = []
     
-    for page in range(1, 250):  # Loop through the first 10 pages
+    for page in range(1, 101):  # Loop through the first 250 pages
         # Construct the URL for each page
         if page == 1:
             URL = f"https://www.sikayetvar.com/{brand_name}"
         else:
             URL = f"https://www.sikayetvar.com/{brand_name}?page={page}"
-
-        
         
         # Send the HTTP request
         httpReq = requests.get(URL, headers={'User-agent': 'your bot 0.1'}, verify=False)
@@ -48,6 +46,9 @@ def get_complaints(brand_name):
                         full_complaint_text = complaint_detail.text.strip()
                         # Append the full text with its url to the list
                         complaints.append((full_url, full_complaint_text))
+        
+        # Sleep for 2 seconds to avoid getting banned from the server
+        time.sleep(2)
     
     return complaints
 
