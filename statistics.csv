@@ -6,11 +6,13 @@ tr,TOTAL-NEG,5345,0
 tr,TurkTeklekom,500,1          
 tr,Turkcell,310,1
 tr,Vodafone,368,1
-tr,TOTAL-NEU,1178,1
+tr,converted,1523,1
+tr,TOTAL-NEU,2702,1
 tr,TurkTeklekom,380,2
 tr,Turkcell,317,2
 tr,Vodafone,199,2
-tr,TOTAL-POS,896,2
+tr,converted 1050,2
+tr,TOTAL-POS,1947,2
 eng,ATT,1014,0
 eng,T-Mobile,748,0
 eng,Vodafone,998,0
