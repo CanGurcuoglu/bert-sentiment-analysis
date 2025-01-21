@@ -2,12 +2,14 @@ import time
 from bs4 import BeautifulSoup
 import requests
 import warnings
+import csv   
 
 warnings.filterwarnings("ignore")
 
 BASE_URL = "https://www.trustpilot.com/review/www.vodafone.co.uk?stars=5" 
 
 for page in range(1, 3):
+    f = open(r'data.csv', 'a', newline='',encoding='utf-8')
 
     if page == 1:
         url = BASE_URL
@@ -31,7 +33,8 @@ for page in range(1, 3):
 
                 if p:
                     complaint_text = p.get_text(strip=True)
-                    print(f"Page {page} - Complaint {i}: {complaint_text}\n")
+                    fields=[complaint_text,'2']
+                    csv.writer(f).writerow(fields)
                 else:
                     print(f"Page {page} - Complaint {i}: ERROR - No <p> tag found")
         else:
