@@ -1,7 +1,5 @@
 import pandas as pd
 from googletrans import Translator
-import ssl
-
 
 def translate_csv(x):
   # CSV dosyasını okuma
