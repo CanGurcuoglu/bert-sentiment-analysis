@@ -1,11 +1,11 @@
 import time
 from bs4 import BeautifulSoup
 import requests
+import warnings
 
-BASE_URL = "https://www.trustpilot.com/review/www.vodafone.co.uk?stars=5"                                          
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-}
+warnings.filterwarnings("ignore")
+
+BASE_URL = "https://www.trustpilot.com/review/www.vodafone.co.uk?stars=5" 
 
 for page in range(1, 3):
 
@@ -17,7 +17,7 @@ for page in range(1, 3):
     try:
         
         # Sending the HTTP request
-        response = requests.get(url, headers=HEADERS)
+        response = requests.get(url, headers={'User-agent': 'your bot 0.1'}, verify=False)
             
         # Parsing HTML content
         soup = BeautifulSoup(response.text, "html.parser")
@@ -40,5 +40,5 @@ for page in range(1, 3):
     except requests.exceptions.RequestException as e:
         print(f"Error fetching page {page}: {e}")
         
-    # Sleep for 5 seconds 
-    time.sleep(5)
+    # Sleep for 10 seconds 
+    time.sleep(10)
