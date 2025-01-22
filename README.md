@@ -1,8 +1,11 @@
 DATASETLER
 
+<<<<<<< HEAD
 can_deneme
 
 deneme git
+=======
+>>>>>>> fbd666da3db96e29ce416dfb3d62e5f467ad22e7
 
 api-key: 1c0b2cf7a9de4b2df64d4805e3293d61406d7fac
 
