@@ -1,3 +1,6 @@
+!pip install python-certifi-win32 --upgrade
+
+
 DATASETLER
 
 api-key: 1c0b2cf7a9de4b2df64d4805e3293d61406d7fac
