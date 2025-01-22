@@ -1,0 +1,51 @@
+text,label
+"kötü",0
+"çok kötü",0
+"berbat",0
+"rezil",0
+"pişmanım",0
+"almayın",0
+"iğrenç",0
+"pahalı",0
+"Çekim gücü oldukça zayıf.",0
+"Fiyatlar çok yüksek.",0
+"İnternet hızı çok yavaş.",0
+"Müşteri hizmetleri yetersiz.",0
+"Sürekli bağlantı sorunları yaşıyorum.",0
+"Hizmet kalitesi çok düşük.",0
+"Faturalar anlaşılmaz ve karmaşık.",0
+"Sürekli kesinti yaşıyorum.",0
+"Müşteri memnuniyeti çok düşük.",0
+"Genel olarak hizmetlerinden memnun değilim.",0
+"idare eder",1
+"eh işte",1
+"orta",1
+"gideri var",1
+"okey",1
+"vasat",1
+"Çekim gücü idare eder.",1
+"Fiyatlar orta seviyede diyebilirim.",1
+"Genel olarak hizmet vasat.",1
+"Ne iyi ne kötü, ortalama bir performans.",1
+"Yani, iş görüyor.",1
+"Okey, kullanılabilir.",1
+"Fiyatlar ne ucuz ne pahalı, ortada.",1
+"Hizmet kalitesi fena değil.",1
+"Çekim gücü yeterli ama çok iyi değil.",1
+"Genel olarak orta düzeyde bir hizmet sunuyorlar.",1
+"iyi",2
+"güzel",2
+"çok iyi",2
+"kaliteli",2
+"uygun",2
+"ucuz",2
+"Çekim gücü gerçekten çok iyi.",2
+"Fiyatlar oldukça uygun ve ekonomik.",2
+"Hizmet kalitesi üst düzeyde.",2
+"Müşteri memnuniyeti yüksek.",2
+"İnternet hızı oldukça tatmin edici.",2
+"Kullanıcı dostu paketler sunuyorlar.",2
+"Her yerde kesintisiz iletişim sağlıyor.",2
+"Faturalandırma şeffaf ve anlaşılır.",2
+"Destek hizmetleri çok yardımcı oluyor.",2
+"Genel olarak hizmetlerinden çok memnunum.",2
