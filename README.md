@@ -1,25 +1,3 @@
-
-def preprocess_text(text):
-    return tokenizer(text, padding="max_length", truncation=True, max_length=128, return_tensors="pt")
-
-import torch
-
-def predict(text):
-    inputs = preprocess_text(text)
-    with torch.no_grad():
-        outputs = model(**inputs)
-        predictions = torch.argmax(outputs.logits, dim=-1)
-    return predictions.item()
-
-# Example usage
-text = "Where do I start? I love this perfect incredible My wifi has been down for three days and counting, which is also how long I have tried unsuccessfully to reach someone who can help. Oh yeah, they also have me locked out of my system, and I can get no help with that either. Chat says they need to access my account and apparently they cannot help. Voice line says there's a wait, but they never call back when you request it. I am DONE."
-prediction = predict(text)
-print(f"Prediction: {prediction}")
-
-
-!pip install python-certifi-win32 --upgrade
-
-
 DATASETLER
 
 api-key: 1c0b2cf7a9de4b2df64d4805e3293d61406d7fac
