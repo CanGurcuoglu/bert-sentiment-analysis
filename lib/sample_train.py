@@ -19,7 +19,7 @@ model = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased", 
 
 training_args = TrainingArguments(
     output_dir="./results",
-    evaluation_strategy = "epoch",
+    eval_strategy = "epoch",
     save_strategy = "epoch",
     num_train_epochs=3,  # Adjust as needed
     per_device_train_batch_size=8,  # Adjust based on your GPU memory
