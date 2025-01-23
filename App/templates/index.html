@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BERT SENTIMENT ANALYSIS</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+        }
+
+        button {
+            background-color: #4CAF50; /* Yeşil bir renk örneği */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        form {
+            cursor: text;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" action="/dil_degistir">
+        <button type="submit" name="dil" value="TR">Türkçe</button>
+        <button type="submit" name="dil" value="ENG">İngilizce</button>
+    </form>
+    <h1>{{ dil }}</h1>
+    <form method="POST">
+        <input type="text" name="metin" placeholder="Metin girin">
+        <input type="submit" value="Gönder">
+    </form>
+
+    <div id="sonuc">
+        <p>{{ sonuc }}</p>
+    </div>
+</body>
+</html>
