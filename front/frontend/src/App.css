@@ -1,0 +1,164 @@
+/* App.css */
+
+:root {
+  --blue-light: #e6f0ff;
+  --blue-medium: #5a9bf6;
+  --blue-dark: #1f4c9e;
+  --white: #ffffff;
+  --gray: #f4f4f4;
+  --red: #ff4d4d;
+  --yellow: #ffcc00;
+  --green: #4caf50;
+}
+
+body {
+  margin: 0;
+  font-family: "Arial", sans-serif;
+  background-color: var(--blue-light);
+  color: var(--blue-dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url('./assets/havelsan.png'); /* Background image */
+  background-size: cover;
+  background-position: center;
+}
+
+.app-container {
+  text-align: center;
+  background-color: var(--white);
+  padding: 3rem;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 1000px; /* Maximum width */
+  min-width: 800px;  /* Set a minimum width to prevent shrinking */
+  overflow: hidden;  /* Prevent overflow if text is too long */
+  word-wrap: break-word; /* Ensure long words are broken */
+}
+
+.app-title {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--blue-dark);
+}
+
+.toggle-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.toggle-label {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.toggle-input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--gray);
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: var(--blue-medium);
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.toggle-input:checked + .toggle-slider {
+  background-color: var(--blue-dark);
+}
+
+.toggle-input:checked + .toggle-slider:before {
+  transform: translateX(26px);
+}
+
+.language-info {
+  margin-left: 1rem;
+  font-size: 1.2rem;
+  color: var(--blue-medium);
+}
+
+.input-container {
+  margin-bottom: 1.5rem;
+}
+
+.text-input {
+  width: 100%;
+  max-width: 600px;
+  padding: 0.8rem;
+  border: 2px solid var(--blue-medium);
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+  font-size: 1rem;
+}
+
+.btn {
+  padding: 0.8rem 1.8rem;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--blue-medium);
+  color: var(--white);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: var(--blue-dark);
+}
+
+.result-container {
+  background-color: var(--blue-light);
+  padding: 1.5rem;
+  border-radius: 5px;
+  margin-top: 2rem;
+}
+
+.result-container.red {
+  background-color: var(--red);
+}
+
+.result-container.yellow {
+  background-color: var(--yellow);
+}
+
+.result-container.green {
+  background-color: var(--green);
+}
+
+.result-title {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: black;
+}
+
+.result-text {
+  font-size: 1.5rem;
+  color: black;
+}
