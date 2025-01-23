@@ -1,1 +1,2 @@
 BERT_ENG/best-model/model.safetensors filter=lfs diff=lfs merge=lfs -text
+BERT_TR/best-model/model.safetensors filter=lfs diff=lfs merge=lfs -text
