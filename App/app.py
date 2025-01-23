@@ -14,8 +14,8 @@ cursor.execute("CREATE TABLE IF NOT EXISTS data (id INTEGER PRIMARY KEY AUTOINCR
 conn.commit()
 
 #import models
-#tokenizer_tr = AutoTokenizer.from_pretrained("dbmdz/bert-base-turkish-cased") # Türkçe BERT modelini kullan
-#model_tr = AutoModelForSequenceClassification.from_pretrained("./BERT_TR/best-model")
+tokenizer_tr = AutoTokenizer.from_pretrained("dbmdz/bert-base-turkish-cased") # Türkçe BERT modelini kullan
+model_tr = AutoModelForSequenceClassification.from_pretrained("./BERT_TR/best-model")
 tokenizer_eng = AutoTokenizer.from_pretrained("bert-base-uncased") # Türkçe BERT modelini kullan
 model_eng = AutoModelForSequenceClassification.from_pretrained("./BERT_ENG/best-model")
 
