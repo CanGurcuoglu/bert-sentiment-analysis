@@ -1,6 +1,6 @@
 api-key: 1c0b2cf7a9de4b2df64d4805e3293d61406d7fac                   # when using colab to train models
 
-http://localhost:8080/user/signup/?token=dSXAUGlsqwmrfheyvmybFZExrXg5EtuV1MiDNQq2
+http://localhost:8080/user/signup/?token=reRp8covJe5yHozHr7wIGwpIRFpBWoor2JKfOZjI
 
 BERT Sentiment Analysis
 
