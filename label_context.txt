@@ -7,6 +7,6 @@ NUM => (Fiyat ise TL ile birlikte)  10 TL gibi
 NET => İnternet çekmemesi, bakım onarım sorunları vs... konum dan dolayı olan sorunlar
 PAY => Ödeme ve faturayla alakalı bütün sorunlar
 PKG => Yeni paket, aşım, vs...
-LIN => yeni hat açma, yeni hata geçme vs...
+LIN => yeni hat açma, yeni hata geçme vs... Taahüt, yeni operatöre geçme
 OTH => Geri kalan bütün şikayetler
 DATE => Tarih olan herşey düz tarih ile birlikte, varsa (12 ocak itibariyle), (12 Ocak tarihinde)
