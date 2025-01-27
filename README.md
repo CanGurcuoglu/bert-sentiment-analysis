@@ -2,6 +2,9 @@ api-key: 1c0b2cf7a9de4b2df64d4805e3293d61406d7fac                   # when using
 
 http://10.150.16.168:8080/user/signup/?token=reRp8covJe5yHozHr7wIGwpIRFpBWoor2JKfOZjI
 
+can label_studio : 
+http://localhost:8080/user/signup/?token=vXgj2eZtUehzNsFWrvBdzVoI01kq3EaAQlNdDArw
+
 
 BERT Sentiment Analysis
 
