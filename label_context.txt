@@ -20,6 +20,7 @@ ORG => KURUM KURULUŞ,Tüketici Hakem Heyeti'ne
 
 
 ÖRNEK:
+Superonline --> APP
 Israrla aylardır düzenli ödediğim halde [limit puanım gözükmüyor.]--> OTH # SADECE İLGİLİ KISIM. HİKAYE YOK
 [191 TL fatura ücreti çıkardılar. Fakat sonrasında 404 TL fatura geldi] --> PAY  #TAMAMI GEREKLİ BİLGİ
 [internetim o kadar yavaşladı] ki son günlerde inanılmaz zorlanıyorum --> NET # SADECE İLGİLİ KISIM
