@@ -20,3 +20,5 @@ NUM => TEL NO, YILDIZLI YA DA DÜZ
 
 ÖRNEK:
 Israrla aylardır düzenli ödediğim halde [limit puanım gözükmüyor.]--> OTH # SADECE İLGİLİ KISIM. HİKAYE YOK
+[191 TL fatura ücreti çıkardılar. Fakat sonrasında 404 TL fatura geldi] -->   TAMAMI GEREKLİ BİLGİ
+
