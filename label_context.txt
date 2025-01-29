@@ -14,11 +14,14 @@ SER => MÜŞTERİ HİZMETLERİ İLE ALAKALI BÜTÜN SORUNLAR, BAYİ, KABA DAVRAN
 OTH => GERİ KALAN VE YUKARIDAKİ HİÇBİR ŞİKAYET TÜRÜNE GİRMEYEN SORUNLAR, limit puanı
 DATE => TARİH OLAN HERŞEY, SAATLERİ ALMIYORUZ, 21.12.2005 , 1 ay ,15 ocak ...
 NUM => TEL NO, YILDIZLI YA DA DÜZ
+ORG => KURUM KURULUŞ,Tüketici Hakem Heyeti'ne
 
 
 
 
 ÖRNEK:
 Israrla aylardır düzenli ödediğim halde [limit puanım gözükmüyor.]--> OTH # SADECE İLGİLİ KISIM. HİKAYE YOK
-[191 TL fatura ücreti çıkardılar. Fakat sonrasında 404 TL fatura geldi] -->   TAMAMI GEREKLİ BİLGİ
+[191 TL fatura ücreti çıkardılar. Fakat sonrasında 404 TL fatura geldi] --> PAY  #TAMAMI GEREKLİ BİLGİ
+[internetim o kadar yavaşladı] ki son günlerde inanılmaz zorlanıyorum --> NET # SADECE İLGİLİ KISIM
+Bu mağduriyetime karşın [hattımı taahhüt cezası başka bir operatör şirketine taşımak istiyorum] --> LIN # DETAYLAR VAR
 
