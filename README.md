@@ -21,7 +21,7 @@ Git (to clone the repository)
 
 
 1. Clone the Repository
-First, clone the repository to your local machine.
+  - First, clone the repository to your local machine.
 
 bash
 Kopyala
@@ -31,19 +31,19 @@ cd bert-sentiment-analysis
 
 
 2. Set Up the Backend (Flask)
-a. Navigate to the App directory.
+  - a. Navigate to the App directory.
 bash
 Kopyala
 Düzenle
 cd App
-b. Create a virtual environment.
+  - b. Create a virtual environment.
 It's recommended to use a virtual environment to manage the Python dependencies.
 
 bash
 Kopyala
 Düzenle
 python -m venv venv
-c. Activate the virtual environment.
+  - c. Activate the virtual environment.
 For Windows:
 
 bash
@@ -56,12 +56,12 @@ bash
 Kopyala
 Düzenle
 source venv/bin/activate
-d. Install the backend dependencies.
+  - d. Install the backend dependencies.
 bash
 Kopyala
 Düzenle
 pip install -r requirements.txt
-e. Run the Flask backend.
+  - e. Run the Flask backend.
 bash
 Kopyala
 Düzenle
@@ -70,17 +70,17 @@ The Flask backend will start and listen for requests on http://127.0.0.1:5000.
 
 
 3. Set Up the Frontend (React)
-a. Navigate to the front/frontend directory.
+  - a. Navigate to the front/frontend directory.
 bash
 Kopyala
 Düzenle
 cd front/frontend
-b. Install the frontend dependencies.
+  - b. Install the frontend dependencies.
 bash
 Kopyala
 Düzenle
 npm install
-c. Run the React development server.
+  - c. Run the React development server.
 bash
 Kopyala
 Düzenle
@@ -91,8 +91,8 @@ The React frontend will start and be available at http://localhost:3000.
 4. Open the App
 Once both the backend and frontend servers are running, you can open your web browser and go to:
 
-Frontend: http://localhost:3000
-Backend: http://127.0.0.1:5000 (for API requests)
+  - Frontend: http://localhost:3000
+  - Backend: http://127.0.0.1:5000 (for API requests)
 The frontend will interact with the Flask backend to analyze sentiment based on the text input.
 
 
