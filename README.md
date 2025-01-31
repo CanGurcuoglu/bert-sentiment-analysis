@@ -111,7 +111,7 @@ The frontend will interact with the Flask backend to analyze sentiment based on 
 You can toggle between English and Turkish by clicking the language switcher on the frontend interface.
 
 
-7. Stopping the Servers
+6. Stopping the Servers
 
 To stop the servers:
 
