@@ -4,10 +4,8 @@ api-key: 1c0b2cf7a9de4b2df64d4805e3293d61406d7fac                   # when using
 
 http://10.150.16.168:8080/user/signup/?token=reRp8covJe5yHozHr7wIGwpIRFpBWoor2JKfOZjI
 
-can label_studio : 
-http://localhost:8080/user/signup/?token=5i29TVWAaJ4dmg3fXyglRMAdDSTFZGgriimc2TWV
 
-BERT Sentiment Analysis
+# BERT SENTIMENT ANALYSIS
 
 This project provides a web-based sentiment analysis tool built using BERT (Bidirectional Encoder Representations from Transformers). The tool supports both English and Turkish languages. The frontend is built with React, and the backend is built with Flask.
 
@@ -19,7 +17,7 @@ Node.js and npm (for the frontend)
 Git (to clone the repository)
 
 
-Getting Started
+## Getting Started
 
 
 1. Clone the Repository
