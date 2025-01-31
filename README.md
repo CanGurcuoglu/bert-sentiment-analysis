@@ -23,67 +23,44 @@ Git (to clone the repository)
 1. Clone the Repository
   - First, clone the repository to your local machine.
 
-bash
-Kopyala
-Düzenle
 git clone https://github.com/your-username/bert-sentiment-analysis.git
 cd bert-sentiment-analysis
 
 
 2. Set Up the Backend (Flask)
   - a. Navigate to the App directory.
-bash
-Kopyala
-Düzenle
+
 cd App
   - b. Create a virtual environment.
 It's recommended to use a virtual environment to manage the Python dependencies.
 
-bash
-Kopyala
-Düzenle
 python -m venv venv
   - c. Activate the virtual environment.
 For Windows:
 
-bash
-Kopyala
-Düzenle
 .\venv\Scripts\activate
+
 For Mac/Linux:
 
-bash
-Kopyala
-Düzenle
 source venv/bin/activate
   - d. Install the backend dependencies.
-bash
-Kopyala
-Düzenle
+
 pip install -r requirements.txt
   - e. Run the Flask backend.
-bash
-Kopyala
-Düzenle
+
 python app.py
 The Flask backend will start and listen for requests on http://127.0.0.1:5000.
 
 
 3. Set Up the Frontend (React)
   - a. Navigate to the front/frontend directory.
-bash
-Kopyala
-Düzenle
+
 cd front/frontend
   - b. Install the frontend dependencies.
-bash
-Kopyala
-Düzenle
+
 npm install
   - c. Run the React development server.
-bash
-Kopyala
-Düzenle
+
 npm start
 The React frontend will start and be available at http://localhost:3000.
 
