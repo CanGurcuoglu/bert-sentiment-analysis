@@ -1,0 +1,29 @@
+LABEL CONTEXT
+PER/OPE/BANK/APP/LOC/NET/PAY/PKG/LIN/SER/OTH/DATE/NUM
+
+PER => YILDIZLI YA DA DÜZ İSİM
+OPE => OPERATÖR İSİMLERİ TURKCELL, VODAFONE VS. TURKCELL GNÇ + VODAFONE RED BİRLİKTE ALINACAK
+BANK => BANKA İSİMLERİ
+APP => E-DEVLET, X, INSTAGRAM, APPLE, VS
+LOC => ADRES (A şehri, B amh., C cad) birleşik
+NET => İNTRENET ÇEKMEMESİ, ŞEBEKE SORUNLARI, GENEL ALT YAPI SORUNLARI
+PAY => ÖDEME VE FATURA GEÇEN ŞİKAYETLER, BORÇ, CAYMA BEDELİ,
+PKG => YENİ PAKET ALIMI, PAKET AŞIMI, X PAKETİ Y PAKETİ, A GB B DK C SMS 45 TL PAKETİ,HEDİYE, TAAHHÜT OLUŞTURMA VS. [hiper limitsiz 50Mbps]
+LIN => YENİ HAT AÇMA, HAT DEĞİŞTİRME, YENİ HATTA GEÇME, OPERATÖR DEĞİŞTİRME, SİM KART
+SER => MÜŞTERİ HİZMETLERİ İLE ALAKALI BÜTÜN SORUNLAR, BAYİ, KABA DAVRANIŞ
+OTH => GERİ KALAN VE YUKARIDAKİ HİÇBİR ŞİKAYET TÜRÜNE GİRMEYEN SORUNLAR, limit puanı
+DATE => TARİH OLAN HERŞEY, SAATLERİ ALMIYORUZ, 21.12.2005 , 1 ay ,15 ocak ..., 3 ocak tarihinde yazıyorsa sadece 3 ocak date diyr alınmalı
+NUM => TEL NO, YILDIZLI YA DA DÜZ
+ORG => KURUM KURULUŞ,Tüketici Hakem Heyeti'ne
+
+
+
+
+ÖRNEK:
+Superonline --> APP
+Israrla aylardır düzenli ödediğim halde [limit puanım gözükmüyor.]--> OTH # SADECE İLGİLİ KISIM. HİKAYE YOK
+[191 TL fatura ücreti çıkardılar. Fakat sonrasında 404 TL fatura geldi] --> PAY  #TAMAMI GEREKLİ BİLGİ
+[internetim o kadar yavaşladı] ki son günlerde inanılmaz zorlanıyorum --> NET # SADECE İLGİLİ KISIM
+Bu mağduriyetime karşın [hattımı taahhüt cezası başka bir operatör şirketine taşımak istiyorum] --> LIN # DETAYLAR VAR
+Henüz faturam kesilmedi. Ben paketlerin iptal olmasını istiyorum. Kullanmak istemiyorum ve [faturama yansımasını istemiyorum] --> PAY
+
