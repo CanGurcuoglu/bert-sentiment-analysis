@@ -35,6 +35,8 @@ const App = () => {
       .post("http://127.0.0.1:5000/api/language", { language: newLanguage })
       .then(() => {
         setLanguage(newLanguage);
+        console.log(`Language changed to ${newLanguage}`);
+        console.log(language);
       })
       .catch((error) => console.error(error));
   };
@@ -42,19 +44,58 @@ const App = () => {
   // Predict Sentiment
   const predictSentiment = () => {
     axios
-      .post("http://127.0.0.1:5000/api/predict", { text })
+      .post("http://127.0.0.1:5000/api/analyze", { text })
       .then((response) => {
         const prediction = response.data.result;
+        console.log(response.data);
         setResult(prediction);
+        const analysis = response.data.analysis;
+        const sentiment = response.data.sentiment;
+
         
+        if(analysis === "sentiment"){
+          console.log("Sentiment Analysis");
         // Set the color based on the result
-        if (prediction === 0) {
-          setResultColor("red");
-        } else if (prediction === 1) {
-          setResultColor("yellow");
-        } else if (prediction === 2) {
-          setResultColor("green");
-        }
+          if (sentiment === "Negative") {
+            if(language === "ENG"){
+              console.log(language)
+              setResult("Negative");
+            }
+            else{
+              console.log(language)
+              setResult("Negatif");
+            }
+            setResultColor("red");
+          } else if (sentiment === "Neutral") {
+            if(language === "ENG"){
+              console.log(language)
+              setResult("Neutral");
+            }
+            else{
+              console.log(language)
+              setResult("Nötr");}
+
+            setResultColor("yellow");
+          } else if (sentiment === "Positive") {
+            if(language === "ENG"){
+              console.log(language)
+              setResult("Positive");
+            }
+            else{
+              console.log(language)
+              setResult("Pozitif");
+            }
+            setResultColor("green");
+          }}
+          else if(analysis === "ner"){
+            console.log("Named Entity Recognition");
+          }
+          else if(analysis == "both"){
+            console.log("Both Analysis");
+          }
+          else{
+            console.log("No Analysis");
+          }
       })
       .catch((error) => console.error(error));
   };
