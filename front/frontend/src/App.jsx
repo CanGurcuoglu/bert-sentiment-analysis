@@ -47,7 +47,6 @@ const App = () => {
       .post("http://127.0.0.1:5000/api/analyze", { text })
       .then((response) => {
         const prediction = response.data.result;
-        console.log(response.data);
         setResult(prediction);
         const analysis = response.data.analysis;
         const sentiment = response.data.sentiment;
@@ -87,8 +86,12 @@ const App = () => {
             }
             setResultColor("green");
           }}
+
+
+
           else if(analysis === "ner"){
             console.log("Named Entity Recognition");
+            console.log(response.data);
           }
           else if(analysis == "both"){
             console.log("Both Analysis");
