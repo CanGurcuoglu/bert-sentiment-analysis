@@ -19,6 +19,23 @@ const translations = {
   },
 };
 
+const nerColors = {
+  OPE: "red",
+  PAY: "turquoise",
+  LIN: "orange",
+  NET: "yellow",
+  SER: "darkgreen",
+  APP: "maroon",
+  ORG: "bordeaux",
+  PER: "pink",
+  LOC: "brown",
+  NUM: "purple",
+  DATE: "indigo",
+  PKG: "lightgreen",
+  OTH: "blue",
+  BANK: "black"
+}
+
 const App = () => {
   const [language, setLanguage] = useState("ENG");
   const [text, setText] = useState("");
@@ -35,8 +52,6 @@ const App = () => {
       .post("http://127.0.0.1:5000/api/language", { language: newLanguage })
       .then(() => {
         setLanguage(newLanguage);
-        console.log(`Language changed to ${newLanguage}`);
-        console.log(language);
       })
       .catch((error) => console.error(error));
   };
@@ -46,59 +61,50 @@ const App = () => {
     axios
       .post("http://127.0.0.1:5000/api/analyze", { text })
       .then((response) => {
-        const prediction = response.data.result;
-        setResult(prediction);
         const analysis = response.data.analysis;
         const sentiment = response.data.sentiment;
-
-        
-        if(analysis === "sentiment"){
-          console.log("Sentiment Analysis");
-        // Set the color based on the result
+  
+        if (analysis === "sentiment") {
           if (sentiment === "Negative") {
-            if(language === "ENG"){
-              console.log(language)
-              setResult("Negative");
-            }
-            else{
-              console.log(language)
-              setResult("Negatif");
-            }
+            setResult(language === "ENG" ? "Negative" : "Negatif");
             setResultColor("red");
           } else if (sentiment === "Neutral") {
-            if(language === "ENG"){
-              console.log(language)
-              setResult("Neutral");
-            }
-            else{
-              console.log(language)
-              setResult("Nötr");}
-
+            setResult(language === "ENG" ? "Neutral" : "Nötr");
             setResultColor("yellow");
           } else if (sentiment === "Positive") {
-            if(language === "ENG"){
-              console.log(language)
-              setResult("Positive");
-            }
-            else{
-              console.log(language)
-              setResult("Pozitif");
-            }
+            setResult(language === "ENG" ? "Positive" : "Pozitif");
             setResultColor("green");
-          }}
-
-
-
-          else if(analysis === "ner"){
-            console.log("Named Entity Recognition");
-            console.log(response.data);
           }
-          else if(analysis == "both"){
-            console.log("Both Analysis");
-          }
-          else{
-            console.log("No Analysis");
-          }
+        } 
+        else if (analysis === "ner") {
+          const nerButtons = response.data.ner.map((item, index) => (
+            <button
+              key={index}
+              className="ner-button"
+              style={{ backgroundColor: nerColors[item.label] || "gray" }} // Default to gray if no match
+            >
+              {item.label}: {item.text}
+            </button>
+          ));
+          setResult(nerButtons); // Store buttons in state
+          setResultColor(""); // Reset color for NER results
+        } 
+        else if (analysis === "both") {
+          const nerButtons = response.data.ner.map((item, index) => (
+            <button
+              key={index}
+              className="ner-button"
+              style={{ backgroundColor: nerColors[item.label] || "gray" }} // Default to gray if no match
+            >
+              {item.label}: {item.text}
+            </button>
+          ));
+          setResult(nerButtons); // Store buttons in state
+          setResultColor(""); // Reset color for NER results
+        } 
+        else {
+          console.log("No Analysis");
+        }
       })
       .catch((error) => console.error(error));
   };
