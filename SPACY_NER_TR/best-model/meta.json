@@ -1,5 +1,5 @@
 {
-  "lang":"en",
+  "lang":"tr",
   "name":"pipeline",
   "version":"0.0.0",
   "spacy_version":">=3.8.4,<3.9.0",
@@ -20,12 +20,10 @@
     "ner":[
       "APP",
       "BANK",
-      "CARDINAL",
       "DATE",
       "LIN",
       "LOC",
       "NET",
-      "NORP",
       "NUM",
       "OPE",
       "ORG",

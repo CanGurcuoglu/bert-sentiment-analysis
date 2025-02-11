@@ -1,82 +1,89 @@
 from flask import Flask, request, jsonify
 import sqlite3
-import torch
-import re
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
+import os
+import sys
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from flask_cors import CORS
+from models.sentiment_model import SentimentAnalyzer
+from models.ner_model import NERAnalyzer
+from utils.langchain_helper import QueryAnalyzer
+from config import DATABASE_PATH, SPACY_NER_TR_PATH, SPACY_NER_ENG_PATH
+
 
 app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests
 
-
-
 # Database setup
-conn = sqlite3.connect('./App/veri.db', uri=True, check_same_thread=False)
+conn = sqlite3.connect(DATABASE_PATH, uri=True, check_same_thread=False)
 cursor = conn.cursor()
-cursor.execute("CREATE TABLE IF NOT EXISTS data (id INTEGER PRIMARY KEY AUTOINCREMENT, dil TEXT, metin TEXT, sonuc INTEGER)")
+cursor.execute("CREATE TABLE IF NOT EXISTS data (id INTEGER PRIMARY KEY AUTOINCREMENT, dil TEXT, metin TEXT, sonuc TEXT)")
 conn.commit()
 
-# Import models
-tokenizer_tr = AutoTokenizer.from_pretrained("dbmdz/bert-base-turkish-cased")
-model_tr = AutoModelForSequenceClassification.from_pretrained("./BERT_TR/best-model")
-tokenizer_eng = AutoTokenizer.from_pretrained("bert-base-uncased")
-model_eng = AutoModelForSequenceClassification.from_pretrained("./BERT_ENG/best-model")
+# Load models
+sentiment_analyzer = SentimentAnalyzer()
+query_analyzer = QueryAnalyzer()
 
-# Global variables
-secili_dil = "ENG"  # Default language
+# Default language
+secili_dil = "ENG"
 
-# API endpoints
 @app.route("/api/language", methods=["POST"])
 def change_language():
     """
     API endpoint to change the language model.
     """
     global secili_dil
-    data = request.json
+    data = request.get_json()  # This will parse the JSON body into a dictionary
+    if data is None:
+        return jsonify({"error": "Invalid JSON format"}), 400
+
     secili_dil = data.get("language", "ENG")
     message = "Türkçe modeli seçildi." if secili_dil == "TR" else "English model is selected."
     return jsonify({"message": message, "selected_language": secili_dil})
 
-
-@app.route("/api/predict", methods=["POST"])
-def predict_text():
-    """
-    API endpoint to predict sentiment of a given text.
-    """
-    global secili_dil
-    data = request.json
-    metin = data.get("text", "")
-
-    if not metin:
+@app.route("/api/analyze", methods=["POST"])
+def analyze_text():
+    data = request.get_json()
+    print(data)
+    if not data or "text" not in data:
         return jsonify({"error": "Text is required"}), 400
 
-    sonuc = predict(metin, secili_dil)
-    cursor.execute("INSERT INTO data (dil, metin, sonuc) VALUES (?, ?, ?)", (secili_dil, metin, sonuc))
-    conn.commit()
-
-    return jsonify({"result": sonuc, "language": secili_dil})
+    text = data["text"]
+    lang = data.get("language", secili_dil)
 
 
-def predict(text, lang):
-    """
-    Predict sentiment using the selected language model.
-    """
-    if lang == "TR":
-        text = re.sub(r"[^a-zA-ZığüşöçİĞÜŞÖÇ ]", "", text).lower()
-        inputs = tokenizer_tr(text, padding="max_length", truncation=True, max_length=512, return_tensors="pt")
-        with torch.no_grad():
-            outputs = model_tr(**inputs)
-            predictions = torch.argmax(outputs.logits, dim=-1)
-        return predictions.item()
+    # Log the received input
+    print(f"Received text: {text}")
+    print(f"Using language model: {lang}")
+
+    # Step 1: Use LangChain (Gemini) to decide the type of analysis
+    analysis_type = query_analyzer.analyze_query(text)
+    print(f"Gemini decision: {analysis_type}")
+
+    results = {"language": lang, "analysis": analysis_type}
+    print("app result")
+
+    # Step 2: Perform the necessary analysis
+    if analysis_type in {"sentiment", "both"}:
+        print("sentiment ve both")
+        sentiment_result = sentiment_analyzer.predict(text, lang=lang)
+        sentiment_labels = {0: "Negative", 1: "Neutral", 2: "Positive"}
+        results["sentiment"] = sentiment_labels.get(sentiment_result, "Unknown sentiment")
     else:
-        text = re.sub(r"[^a-zA-Z ]", "", text).lower()
-        inputs = tokenizer_eng(text, padding="max_length", truncation=True, max_length=512, return_tensors="pt")
-        with torch.no_grad():
-            outputs = model_eng(**inputs)
-            predictions = torch.argmax(outputs.logits, dim=-1)
-        return predictions.item()
+        print("hiçbiri 1")
 
+
+    if analysis_type in {"ner", "both"}:
+        print("ner ve both")
+        ner_model_path = SPACY_NER_TR_PATH if lang == "TR" else SPACY_NER_ENG_PATH
+        ner_analyzer = NERAnalyzer(ner_model_path)
+        ner_result = ner_analyzer.analyze(text)
+        results["ner"] = ner_result
+    else:
+        print("hiçbiri 2")
+
+    return jsonify(results)
 
 if __name__ == "__main__":
     app.run(debug=True)
