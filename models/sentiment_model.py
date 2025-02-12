@@ -12,7 +12,7 @@ class SentimentAnalyzer:
         self.tokenizer_eng = AutoTokenizer.from_pretrained("bert-base-uncased")
         self.model_eng = AutoModelForSequenceClassification.from_pretrained(BERT_MODEL_ENG_PATH)
 
-    def predict(self, text, lang="ENG"):
+    def predict(self, text, lang):
         """
         Predict sentiment for the given text.
         Returns: 
