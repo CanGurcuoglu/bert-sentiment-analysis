@@ -23,7 +23,7 @@ const nerColors = {
   OPE: "red",
   PAY: "turquoise",
   LIN: "orange",
-  NET: "yellow",
+  NET: "#b8af09",
   SER: "darkgreen",
   APP: "maroon",
   ORG: "bordeaux",
@@ -33,83 +33,77 @@ const nerColors = {
   DATE: "indigo",
   PKG: "lightgreen",
   OTH: "blue",
-  BANK: "black"
-}
+  BANK: "black",
+};
 
 const App = () => {
   const [language, setLanguage] = useState("ENG");
   const [text, setText] = useState("");
-  const [result, setResult] = useState(null); // Store result as null initially
-  const [resultColor, setResultColor] = useState(""); // Store color of result container
+  const [result, setResult] = useState(null);
+  const [resultColor, setResultColor] = useState("");
+  const [nerButtons, setNerButtons] = useState([]);
 
-  // Change Language with Toggle
   const toggleLanguage = () => {
     const newLanguage = language === "ENG" ? "TR" : "ENG";
-    setText(""); // Clear the text input
-    setResult(""); // Clear the prediction result
-    setResultColor(""); // Reset the result color
+    setText("");
+    setResult(null);
+    setResultColor("");
+    setNerButtons([]);
     axios
       .post("http://127.0.0.1:5000/api/language", { language: newLanguage })
-      .then(() => {
-        setLanguage(newLanguage);
-      })
+      .then(() => setLanguage(newLanguage))
       .catch((error) => console.error(error));
   };
 
-  // Predict Sentiment
   const predictSentiment = () => {
     axios
       .post("http://127.0.0.1:5000/api/analyze", { text })
       .then((response) => {
-        const analysis = response.data.analysis;
-        const sentiment = response.data.sentiment;
-  
-        if (analysis === "sentiment") {
+        const { analysis, sentiment, ner } = response.data;
+
+        let newResult = null;
+        let newColor = "";
+        let newNerButtons = [];
+
+        console.log(analysis);
+
+        if (analysis === "sentiment" || analysis === "both") {
           if (sentiment === "Negative") {
-            setResult(language === "ENG" ? "Negative" : "Negatif");
-            setResultColor("red");
+            newResult = language === "ENG" ? "Negative" : "Negatif";
+            newColor = "red";
           } else if (sentiment === "Neutral") {
-            setResult(language === "ENG" ? "Neutral" : "Nötr");
-            setResultColor("yellow");
+            newResult = language === "ENG" ? "Neutral" : "Nötr";
+            newColor = "yellow";
           } else if (sentiment === "Positive") {
-            setResult(language === "ENG" ? "Positive" : "Pozitif");
-            setResultColor("green");
+            newResult = language === "ENG" ? "Positive" : "Pozitif";
+            newColor = "green";
           }
-        } 
-        else if (analysis === "ner") {
-          const nerButtons = response.data.ner.map((item, index) => (
-            <button
-              key={index}
-              className="ner-button"
-              style={{ backgroundColor: nerColors[item.label] || "gray" }} // Default to gray if no match
-            >
-              {item.label}: {item.text}
-            </button>
-          ));
-          setResult(nerButtons); // Store buttons in state
-          setResultColor(""); // Reset color for NER results
-        } 
-        else if (analysis === "both") {
-          const nerButtons = response.data.ner.map((item, index) => (
-            <button
-              key={index}
-              className="ner-button"
-              style={{ backgroundColor: nerColors[item.label] || "gray" }} // Default to gray if no match
-            >
-              {item.label}: {item.text}
-            </button>
-          ));
-          setResult(nerButtons); // Store buttons in state
-          setResultColor(""); // Reset color for NER results
-        } 
-        else {
-          console.log("No Analysis");
         }
+
+        if (analysis === "ner" || analysis === "both") {
+          newNerButtons = ner.map((item, index) => (
+            <button
+              key={index}
+              className="ner-button"
+              style={{ backgroundColor: nerColors[item.label] || "gray" }}
+            >
+              {item.label}: {item.text}
+            </button>
+          ));
+        }
+
+        if(analysis !== "sentiment" && analysis !== "ner") {
+          console.log("Zortingen Strasse")
+        }
+
+        setResult(newResult);
+        setResultColor(newColor);
+        setNerButtons(newNerButtons);
       })
       .catch((error) => console.error(error));
   };
 
-  const t = translations[language]; // Select translations based on the current language
+  const t = translations[language];
 
   return (
     <div className="app-container">
@@ -140,12 +134,27 @@ const App = () => {
           {t.analyze}
         </button>
       </div>
-      <div
-        className={`result-container ${resultColor}`} // Apply the dynamic color class
-      >
-        <h2 className="result-title">{t.predictionResult}</h2>
-        <p className="result-text">{result !== null ? result : ""}</p>
+      <div className="results-wrapper">
+  {nerButtons.length > 0 && result ? (
+    <>
+      <div className="result-container">{nerButtons}</div>
+      <div className={`result-container-copy ${resultColor}`}>
+        <p className="result-text">{result}</p>
       </div>
+    </>
+  ) : (
+    <>
+      {nerButtons.length > 0 && (
+        <div className="result-container">{nerButtons}</div>
+      )}
+      {result && (
+        <div className={`result-container-copy ${resultColor}`}>
+          <p className="result-text">{result}</p>
+        </div>
+      )}
+    </>
+  )}
+</div>
     </div>
   );
 };
