@@ -83,7 +83,7 @@ def analyze_text():
             query = query.split(",")
             print(query)
             if (len(query) == 1):
-                results["query"]
+                results["query"] = query
             else:
                 results["query"] = db.ope_label(query[1],query[2],secili_dil) if(query[0] == "ope_label") else db.ope_sentiment(query[1],query[2],secili_dil)
         case "else":

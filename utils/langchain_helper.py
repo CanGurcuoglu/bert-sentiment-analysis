@@ -97,12 +97,13 @@ class QueryAnalyzer:
         Options:
             "ope_label", "operator_name", "label_type": If user input contains operator_name and label_type
             "ope_sentiment", "operator_name", "sentiment_type": If user input contains operator_name and sentiment_type
-            "answer": If none of these.
+            "answer": If none of these. for example ("I can't get the result you want right now.")
 
         Response (only one of 'ope_label, operator_name, label_type', 'ope_sentiment, operator_name, sentiment_type', or 'answer')
 
         Example:
             "How many negative reviews are there about Vodafone?"--> 'ope_sentiment,Vodafone,Negative'
+            "How many negative reviews are there?" --> "I can't get the result you want right now."
         """
         try:
             fallback_response = self.client.models.generate_content(
@@ -111,7 +112,7 @@ class QueryAnalyzer:
             )
         except:
             self.reload()
-            return "an error occured. Please, try again"
+            return "an error occured. Please try again"
 
             # LLM'den gelen metni direkt dönüyoruz.
         return fallback_response.text.strip()
