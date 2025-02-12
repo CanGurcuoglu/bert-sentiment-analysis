@@ -153,7 +153,26 @@ const App = () => {
             { text: chat, type: "bot" },
           ]);
           setText(""); // Clear input field
-        } else {
+        } 
+
+        if(analysis === "query"){
+          console.log("query: " + language);
+          let hard_coded_query = "";
+          if(language === "ENG")
+            hard_coded_query = "Of course i can help with the statictical analysis.";
+          else
+            hard_coded_query = "Tabiki istatiki bilgi hakkında yardımcı olabilirim."
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            { text, type: "user" },
+            { text: hard_coded_query, type: "bot" },
+          ]);
+          setText(""); // Clear input field
+        }
+
+
+
+        else {
           setResult(newResult);
           setResultColor(newColor);
           setNerButtons(newNerButtons);
