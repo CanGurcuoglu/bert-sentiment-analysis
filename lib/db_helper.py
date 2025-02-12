@@ -12,10 +12,10 @@ ope_list = ["Turkcell","Vodafone","Turk Telekom","AT&T","T-mobile","ID-Mobile","
 ope2id = {ope: i for i, ope in enumerate(ope_list)}
 id2ope = {i: ope for i, ope in enumerate(ope_list)}
 
-conn = None
-cursor = None
 
 def add_sentence(text,lang,sentiment,ner):
+    conn = sqlite3.connect(DATABASE_PATH, uri=True, check_same_thread=False)
+    cursor = conn.cursor()
     cursor.execute("INSERT INTO SENTENCES (text,lang,sentiment) VALUES (?,?,?)", [text,lang,sentiment])
     conn.commit()
     sid=cursor.lastrowid
@@ -26,17 +26,14 @@ def add_sentence(text,lang,sentiment,ner):
         if (i["label"] == "OPE"):
             cursor.execute("INSERT INTO RELATED_TO (sid,oid) VALUES (?,?)", [sid,ope2id[find_ope(i["text"])]])
     conn.commit()
+    conn.close()
 
 
 def find_ope(name):
     return process.extractOne(name,ope_list)[0]
 
 def init_database():
-    global conn
-    global cursor
     if(os.path.exists(DATABASE_PATH)):
-        conn = sqlite3.connect(DATABASE_PATH, uri=True, check_same_thread=False)
-        cursor = conn.cursor()
         return
     conn = sqlite3.connect(DATABASE_PATH, uri=True, check_same_thread=False)
     cursor = conn.cursor()
@@ -59,3 +56,4 @@ def init_database():
     for i, ope in enumerate(ope_list):
         cursor.execute("INSERT INTO OPERATORS (id,name) VALUES (?,?)", [i,ope])
     conn.commit()
+    conn.close()
