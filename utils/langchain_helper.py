@@ -76,7 +76,7 @@ class QueryAnalyzer:
             # LLM'den gelen metni direkt dönüyoruz.
         return fallback_response.text.strip()
     
-    def query_analyzer(self,text):
+    def sql_analyzer(self,text):
         fallback_prompt = f"""
         You can use two function and they have required arguments:
 
@@ -88,12 +88,21 @@ class QueryAnalyzer:
             -sentiment_type: must be in this list "sentiment_labels = ["Negative", "Neutral", "Positive"]"
         The user input is: "{text}"
 
-        Options:
-            [ope_label, operator_name, label_type]: If user input contains operator_name and label_type
-            [ope_sentiment, operator_name, sentiment_type]: If user input contains operator_name and sentiment_type
-            [answer]: If none of these.
+        args:
+            replace this arguments with corresponding names from user input:
+            "operator_name": one of these  ["Turkcell","Vodafone","Turk Telekom","AT&T","T-mobile","ID-Mobile","O2"]
+            "label_type": one of these ['OPE', 'APP', 'PAY', 'DATE', 'SER', 'OTH', 'ORG', 'NUM', 'PER', 'LOC', 'PKG', 'NET', 'LIN', 'BANK']
+            "sentiment_type": one of these ["Negative", "Neutral", "Positive"]
 
-        Response (only one of '[ope_label, operator_name, label_type]', '[ope_sentiment, operator_name, sentiment_type]', or '[answer]'):
+        Options:
+            "ope_label", "operator_name", "label_type": If user input contains operator_name and label_type
+            "ope_sentiment", "operator_name", "sentiment_type": If user input contains operator_name and sentiment_type
+            "answer": If none of these.
+
+        Response (only one of 'ope_label, operator_name, label_type', 'ope_sentiment, operator_name, sentiment_type', or 'answer')
+
+        Example:
+            "How many negative reviews are there about Vodafone?"--> 'ope_sentiment,Vodafone,Negative'
         """
         try:
             fallback_response = self.client.models.generate_content(

@@ -57,3 +57,60 @@ def init_database():
         cursor.execute("INSERT INTO OPERATORS (id,name) VALUES (?,?)", [i,ope])
     conn.commit()
     conn.close()
+
+
+
+def ope_sentiment(ope, sent, lang):
+    conn = sqlite3.connect(DATABASE_PATH, uri=True, check_same_thread=False)
+    cursor = conn.cursor()
+    comments_query = f"""
+    SELECT COUNT(*) AS negative_comments_count
+    FROM Sentences s
+    JOIN Related_To rt ON s.id = rt.sid 
+    JOIN Operators o ON rt.oid = o.id
+    WHERE s.sentiment = "{sent}"
+    AND s.lang="{lang}"
+    AND o.Name = "{ope}";
+    """
+    if(lang == "TR"):
+        cursor.execute(comments_query)
+        comments_count = cursor.fetchone()[0]
+        conn.close()
+        return (f"{ope} operatöründe {comments_count} adet {sent} yorum var.")
+    else:
+        cursor.execute(comments_query)
+        comments_count = cursor.fetchone()[0]
+        conn.close()
+        return (f"{ope} has {comments_count} {sent} comments.")
+    
+
+
+
+def ope_label(operator, label, lang):
+    conn = sqlite3.connect(DATABASE_PATH, uri=True, check_same_thread=False)
+    cursor = conn.cursor()
+    package_issue_query = f"""
+    SELECT COUNT(*) AS package
+    FROM Sentences s
+    JOIN Labeled_AS las ON s.ID = las.sid
+    JOIN Labels l ON las.lid = l.ID
+    JOIN Related_To rt ON s.ID = rt.sid
+    JOIN Operators o ON rt.oid = o.ID
+    WHERE l.label = "{label}"
+    AND s.lang="{lang}"
+    AND o.Name = "{operator}";
+    """
+
+    if(lang == "TR"):
+    # Sorguyu çalıştır ve sonucu al
+        cursor.execute(package_issue_query)
+        prob_count = cursor.fetchone()[0]
+        conn.close()
+        return(f"{operator} operatörünün {label} ile ilgili {prob_count} sorunu/şikayeti var.")
+    
+    else:
+        cursor.execute(package_issue_query)
+        prob_count = cursor.fetchone()[0]
+        conn.close()
+        return(f"{operator} has {prob_count} problems about {label}.")
+        
