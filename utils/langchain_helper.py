@@ -5,6 +5,10 @@ class QueryAnalyzer:
         self.client = genai.Client(api_key="AIzaSyCU6iFu1lgxDxOSnPJbphL4CK8m06di_UI")
         self.model_name = "gemini-2.0-flash"
 
+    def reload(self):
+        self.client = genai.Client(api_key="AIzaSyCU6iFu1lgxDxOSnPJbphL4CK8m06di_UI")
+        self.model_name = "gemini-2.0-flash"
+
 
     
     def analyze_query(self, text):
@@ -31,10 +35,16 @@ class QueryAnalyzer:
         """
 
         # 1) Önce metnimizi modele sınıflandırma prompt'u göndererek sorguluyoruz
-        response = self.client.models.generate_content(
-            model=self.model_name,
-            contents=classification_prompt
-        )
+        try:
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=classification_prompt
+            )
+        except:
+            self.reload()
+            return "else"
+
+
 
   
         decision =  response.text.strip().lower()
@@ -53,11 +63,14 @@ class QueryAnalyzer:
         The reply should be natural.
 
         """
-
-        fallback_response = self.client.models.generate_content(
-            model=self.model_name,
-            contents=fallback_prompt
-        )
+        try:
+            fallback_response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=fallback_prompt
+            )
+        except:
+            self.reload()
+            return "an error occured. Please, try again"
 
             # LLM'den gelen metni direkt dönüyoruz.
         return fallback_response.text.strip()
