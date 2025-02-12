@@ -67,8 +67,13 @@ def analyze_text():
     if analysis_type in {"ner", "both"}:
         ner_result = ner_analyzer.analyze(text,secili_dil)
         results["ner"] = ner_result
-    db.add_sentence(text,secili_dil,sentiment,ner_result)
+
+    if analysis_type not in {"sentiment","ner", "both"}:
+        results["chat"] = query_analyzer.chat_response(text)
+    else:
+        db.add_sentence(text,secili_dil,sentiment,ner_result)
+    
     return jsonify(results)
 
 if __name__ == "__main__":
-    app.run(debug=True,host="0.0.0.0")
+    app.run(debug=True)
