@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-import sqlite3
 import os
 import sys
 
@@ -9,20 +8,19 @@ from flask_cors import CORS
 from models.sentiment_model import SentimentAnalyzer
 from models.ner_model import NERAnalyzer
 from utils.langchain_helper import QueryAnalyzer
-from config import DATABASE_PATH, SPACY_NER_TR_PATH, SPACY_NER_ENG_PATH
+import lib.db_helper as db
+
 
 
 app = Flask(__name__)
-CORS(app)  # Allow cross-origin requests
+CORS(app,supports_credentials=True)  # Allow cross-origin requests
 
-# Database setup
-conn = sqlite3.connect(DATABASE_PATH, uri=True, check_same_thread=False)
-cursor = conn.cursor()
-cursor.execute("CREATE TABLE IF NOT EXISTS data (id INTEGER PRIMARY KEY AUTOINCREMENT, dil TEXT, metin TEXT, sonuc TEXT)")
-conn.commit()
+db.init_database()
+
 
 # Load models
 sentiment_analyzer = SentimentAnalyzer()
+ner_analyzer = NERAnalyzer()
 query_analyzer = QueryAnalyzer()
 
 # Default language
@@ -45,43 +43,50 @@ def change_language():
 @app.route("/api/analyze", methods=["POST"])
 def analyze_text():
     data = request.get_json()
-    print(data)
     if not data or "text" not in data:
         return jsonify({"error": "Text is required"}), 400
 
     text = data["text"]
-    lang = data.get("language", secili_dil)
-
-
-    # Log the received input
-    print(f"Received text: {text}")
-    print(f"Using language model: {lang}")
 
     # Step 1: Use LangChain (Gemini) to decide the type of analysis
     analysis_type = query_analyzer.analyze_query(text)
-    print(f"Gemini decision: {analysis_type}")
 
-    results = {"language": lang, "analysis": analysis_type}
-    print("app result")
+    results = {"language": secili_dil, "analysis": analysis_type}
 
     # Step 2: Perform the necessary analysis
-    if analysis_type in {"sentiment", "both"}:
-        print("sentiment ve both")
-        sentiment_result = sentiment_analyzer.predict(text, lang=lang)
-        sentiment_labels = {0: "Negative", 1: "Neutral", 2: "Positive"}
-        results["sentiment"] = sentiment_labels.get(sentiment_result, "Unknown sentiment")
-    else:
-        print("hiçbiri 1")
+    sentiment = ""
+    ner_result = []
 
-
-    if analysis_type in {"ner", "both"}:
-        print("ner ve both")
-        ner_model_path = SPACY_NER_TR_PATH if lang == "TR" else SPACY_NER_ENG_PATH
-        ner_analyzer = NERAnalyzer(ner_model_path)
-        ner_result = ner_analyzer.analyze(text)
-        results["ner"] = ner_result
-    else:
-        print("hiçbiri 2")
+    match analysis_type:
+        case "sentiment":
+            sentiment_result = sentiment_analyzer.predict(text, secili_dil)
+            sentiment_labels = {0: "Negative", 1: "Neutral", 2: "Positive"}
+            results["sentiment"] = sentiment_labels.get(sentiment_result, "Unknown sentiment")
+            sentiment = results["sentiment"]
+            db.add_sentence(text,secili_dil,sentiment,ner_result)
+        case "ner":
+            ner_result = ner_analyzer.analyze(text,secili_dil)
+            results["ner"] = ner_result
+            db.add_sentence(text,secili_dil,sentiment,ner_result)
+        case "both":
+            #sentiment
+            sentiment_result = sentiment_analyzer.predict(text, secili_dil)
+            sentiment_labels = {0: "Negative", 1: "Neutral", 2: "Positive"}
+            results["sentiment"] = sentiment_labels.get(sentiment_result, "Unknown sentiment")
+            sentiment = results["sentiment"]
+            #ner
+            ner_result = ner_analyzer.analyze(text,secili_dil)
+            results["ner"] = ner_result
+            db.add_sentence(text,secili_dil,sentiment,ner_result)
+        case "query":
+            query = query_analyzer.sql_analyzer(text)
+            query = query.split(",")
+            if (len(query) != 3):
+                results["query"] = "default"
+            else:
+                results["query"] = db.ope_label(query[1],query[2],secili_dil) if(query[0] == "ope_label") else db.ope_sentiment(query[1],query[2],secili_dil)
+        case "else":
+            results["chat"] = query_analyzer.chat_response(text)
 
     return jsonify(results)
 
