@@ -86,14 +86,14 @@ npm install
 npm start
 ```
 
-The React frontend will start and be available at http://localhost:3000.
+The React frontend will start and be available at http://localhost:5173.
 
 
 4. Open the App
 
 Once both the backend and frontend servers are running, you can open your web browser and go to:
 
-  - Frontend: http://localhost:3000
+  - Frontend: http://localhost:5173
   - Backend: http://127.0.0.1:5000 (for API requests)
 
 The frontend will interact with the Flask backend to analyze sentiment based on the text input.
