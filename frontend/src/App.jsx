@@ -148,15 +148,26 @@ const App = () => {
               {item.label}: {item.text}
             </button>
           ));
-          
-          setMessages((prevMessages) => [
-            ...prevMessages,
-            { text, type: "user" },
-            { text: newResult, type: "bot" },
-            { text: newNerButtons, type: "bot" },
 
-          ]);
-          setText(""); // Clear input field
+          if(newNerButtons.length === 0){
+            setMessages((prevMessages) => [
+              ...prevMessages,
+              { text, type: "user" },
+              { text: newResult, type: "bot" },
+            ]);
+            setText("")
+
+          }
+          else{
+            setMessages((prevMessages) => [
+              ...prevMessages,
+              { text, type: "user" },
+              { text: newResult, type: "bot" },
+              { text: newNerButtons, type: "bot" },
+  
+            ]);
+            setText(""); // Clear input field
+          }
 
         }
 
