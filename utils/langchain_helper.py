@@ -26,7 +26,7 @@ class QueryAnalyzer:
         Analyze the following user input and decide the type of analysis required.
         Options:
         - 'sentiment': If the text expresses an opinion or emotion.
-        - 'ner': If the text contains names, organizations, locations, dates, or numerical entities.
+        - 'ner': If the text contains names, operator names, organizations, locations, dates, complaints about network, payment, service, infrastructure etc.
         - 'both': If both types of analysis are needed.
         - 'query': If the text requires sql query like "How many negative reviews are there about Vodafone?"
         - 'else': If none of these.
