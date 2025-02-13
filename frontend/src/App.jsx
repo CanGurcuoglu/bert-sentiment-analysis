@@ -170,19 +170,36 @@ const App = () => {
         } 
 
         if(analysis === "query"){
+          let reply = ""
           let hard_coded_query = "";
-          if(language === "ENG")
-            hard_coded_query = "Of course i can help with the statictical analysis.";
-          else
-            hard_coded_query = "Tabiki istatiki bilgi hakkında yardımcı olabilirim."
-          setMessages((prevMessages) => [
-            ...prevMessages,
-            { text, type: "user" },
-            { text: hard_coded_query, type: "bot" },
-            { text: response.data.query, type: "bot" },
-
-          ]);
-          setText(""); // Clear input field
+          if(response.data.query === "default"){
+            if(language === "ENG")
+              reply = "I can't answer this question right now."
+            else
+              reply = "Bu soruya şu anda cevap veremiyorum. "
+            
+            setMessages((prevMessages) => [
+              ...prevMessages,
+              { text, type: "user" },
+              { text: reply, type: "bot" },
+  
+            ]);
+            setText("");
+          }
+          else{
+            if(language === "ENG")
+              hard_coded_query = "Of course i can help with the statictical analysis.";
+            else
+              hard_coded_query = "Tabiki istatiki bilgi hakkında yardımcı olabilirim."
+            setMessages((prevMessages) => [
+              ...prevMessages,
+              { text, type: "user" },
+              { text: hard_coded_query, type: "bot" },
+              { text: response.data.query, type: "bot" },
+  
+            ]);
+            setText(""); // Clear input field
+          }
         }
 
 
