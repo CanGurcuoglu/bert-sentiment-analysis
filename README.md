@@ -1,12 +1,3 @@
-# API KEY
-
-api-key: 1c0b2cf7a9de4b2df64d4805e3293d61406d7fac                   # when using colab to train models
-
-[http://10.150.16.168:8080/user/signup/?token=reRp8covJe5yHozHr7wIGwpIRFpBWoor2JKfOZjI]
-
-(http://10.150.16.168:8090/user/signup/?token=reRp8covJe5yHozHr7wIGwpIRFpBWoor2JKfOZjI)
-
-
 # BERT SENTIMENT ANALYSIS
 
 This project provides a web-based sentiment analysis tool built using BERT (Bidirectional Encoder Representations from Transformers). The tool supports both English and Turkish languages. The frontend is built with React, and the backend is built with Flask.
