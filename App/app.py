@@ -81,9 +81,11 @@ def analyze_text():
         case "query":
             query = query_analyzer.sql_analyzer(text)
             query = query.split(",")
-            print(query)
-            if (len(query) == 1):
-                results["query"] = query
+            if (len(query) != 3):
+                if(secili_dil == "TR"):
+                    results["query"] = "Şu anda sorunuza cevap veremiyorum."
+                else:
+                     results["query"] = "I can't answer this question right now"
             else:
                 results["query"] = db.ope_label(query[1],query[2],secili_dil) if(query[0] == "ope_label") else db.ope_sentiment(query[1],query[2],secili_dil)
         case "else":
