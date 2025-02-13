@@ -1,1 +1,8 @@
 \env
+no_git
+.venv
+*\__pycache__
+front\frontend\node_modules
+database.drawio.png
+Label.txt
+sorgu.ipynb

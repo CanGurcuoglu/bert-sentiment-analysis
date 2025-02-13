@@ -34,6 +34,9 @@ def clean(x):
 
 
 def translate_csv(x):
+  """
+  translates x file eng to tr and save x+'_tr.csv'
+  """
   # CSV dosyasını okuma
   df = pd.read_csv(x+'.csv')
 
