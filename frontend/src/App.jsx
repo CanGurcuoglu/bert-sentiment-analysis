@@ -28,7 +28,7 @@ const nerColors = {
   NET: "#b8af09",
   SER: "darkgreen",
   APP: "maroon",
-  ORG: "bordeaux",
+  ORG: "purple",
   PER: "pink",
   LOC: "brown",
   NUM: "purple",
@@ -88,7 +88,6 @@ const App = () => {
           } else if (sentiment === "Positive") {
             newResult = language === "ENG" ? "Positive" : "Pozitif";
           }
-          console.log(newResult);
           setMessages((prevMessages) => [
             ...prevMessages,
             { text, type: "user" },
@@ -107,12 +106,28 @@ const App = () => {
               {item.label}: {item.text}
             </button>
           ));
-          setMessages((prevMessages) => [
-            ...prevMessages,
-            { text, type: "user" },
-            { text: newNerButtons, type: "bot" },
-          ]);
-          setText(""); // Clear input field
+          let reply = ""
+          if(newNerButtons.length === 0){
+            if(language === "ENG")
+              reply = "I couldn't find any named entities in the sentence.";
+            else if(language === "TR")
+              reply = "Cümlede adlandırılmış varlık bulamadım.";
+            setMessages((prevMessages) => [
+              ...prevMessages,
+              { text, type: "user" },
+              { text: reply, type: "bot" },
+            ]);
+            setText("");
+          }
+          else{
+            setMessages((prevMessages) => [
+              ...prevMessages,
+              { text, type: "user" },
+              { text: newNerButtons, type: "bot" },
+            ]);
+            setText("");
+          }
+           // Clear input field
           
         }
 
@@ -124,7 +139,6 @@ const App = () => {
           } else if (sentiment === "Positive") {
             newResult = language === "ENG" ? "Positive" : "Pozitif";
           }
-          console.log(newResult);
           newNerButtons = ner.map((item, index) => (
             <button
               key={index}
@@ -156,7 +170,6 @@ const App = () => {
         } 
 
         if(analysis === "query"){
-          console.log("query: " + language);
           let hard_coded_query = "";
           if(language === "ENG")
             hard_coded_query = "Of course i can help with the statictical analysis.";
@@ -166,6 +179,8 @@ const App = () => {
             ...prevMessages,
             { text, type: "user" },
             { text: hard_coded_query, type: "bot" },
+            { text: response.data.query, type: "bot" },
+
           ]);
           setText(""); // Clear input field
         }
