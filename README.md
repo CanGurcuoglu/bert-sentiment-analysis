@@ -72,7 +72,7 @@ The Flask backend will start and listen for requests on http://127.0.0.1:5000.
   - a. Navigate to the front/frontend directory.
 
 ```
-cd front/frontend
+cd frontend
 ```
   - b. Install the frontend dependencies.
 
